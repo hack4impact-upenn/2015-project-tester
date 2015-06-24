@@ -1,0 +1,3 @@
+secret_payload = {
+    'coordinates': []
+}
