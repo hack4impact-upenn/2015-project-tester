@@ -1,3 +1,4 @@
 secret_payload = {
-    'coordinates': []
+    'coordinates': ['secret1', 'secret2'],
+    'hi': 'yo!'
 }

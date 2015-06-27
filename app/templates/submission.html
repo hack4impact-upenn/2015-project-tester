@@ -21,9 +21,20 @@
 
 </head>
 <body>
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, msg in messages %}
+      <!--<li>{{ message }}</li>-->
+        <div class="alert alert-dismissable alert-{{ category }}">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            {{ msg }}
+        </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
 <div class="container jumbotron">
     <!--<div class="row">-->
-    <h1 class="text-center">Submit Your API</h1>
+    <h1 class="text-center">Submit your API</h1>
     <!--</div>-->
     <!--<div class="row">-->
     {{ wtf.quick_form(form, button_map={'submit_field': 'primary'}) }}
