@@ -12,15 +12,9 @@
     <link href="{{ url_for('static', filename='css/ripples.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ url_for('static', filename='css/roboto.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ url_for('static', filename='css/custom.css') }}" rel="stylesheet" type="text/css">
-
-
-    <script src="{{ url_for('static', filename='js/jquery-2.1.4.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/material.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/ripples.min.js') }}"></script>
-
 </head>
 <body>
+<div id="flashed-messaged">
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
     {% for category, msg in messages %}
@@ -32,6 +26,7 @@
     {% endfor %}
   {% endif %}
 {% endwith %}
+</div>
 <div class="container jumbotron">
     <!--<div class="row">-->
     <h1 class="text-center">Submit your API</h1>
@@ -40,5 +35,36 @@
     {{ wtf.quick_form(form, button_map={'submit_field': 'primary'}) }}
     <!--</div>-->
 </div>
+<script src="{{ url_for('static', filename='js/jquery-2.1.4.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/material.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/ripples.min.js') }}"></script>
+<script>
+    function getStatus(url) {
+        $.getJSON(url, function(data) {
+                if (data['state'] == 'SUCCESS') {
+                    $('#flashed-messaged').append('<div class="alert alert-dismissable alert-info">\n<button type="button" class="close" data-dismiss="alert">×</button>\nSuccessfully posted payload. Happy hunting.\n</div>')
+                    $('*').css({ 'cursor': 'default' });
+                }
+                else if (data['state'] == 'FAILURE') {
+                    $('#flashed-messaged').append('<div class="alert alert-dismissable alert-danger">\n<button type="button" class="close" data-dismiss="alert">×</button>\nYour API returned an error.\n</div>')
+                    $('*').css({ 'cursor': 'default' });
+                }
+                else {
+                    // rerun in 2 seconds
+                    setTimeout(function() {
+                        getStatus(url);
+                    }, 2000);
+                }
+        });
+    }
+
+    $('#submit_field').on("click", null, null, function(evt) {
+        evt.preventDefault();
+        var url = $('#submission_url').val();
+        $('*').css({ 'cursor': 'wait' });
+        $.post('{{url_for('start_request')}}', {url: url}, getStatus);
+    });
+</script>
 </body>
 </html>
