@@ -11,7 +11,7 @@ def index():
 
 @app.route('/start_request', methods=['POST'])
 def start_request():
-    url = request.form['url'] + '/coordinates'
+    url = request.form['url']
     task = make_requests_to_api.delay(url)
     return url_for('task_status', task_id=task.id), 200
 

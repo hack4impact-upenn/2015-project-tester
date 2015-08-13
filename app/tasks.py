@@ -5,10 +5,11 @@ from app import celery
 
 @celery.task(bind=True)
 def make_requests_to_api(self, url):
-    # try:
+    # Make sure the api is alive
+    get = requests.get(url=url + '/health')
+    get.raise_for_status()
+
+    # Now make post request
     payload = secret_payload
-    r = requests.post(url=url, json=payload)
-    r.raise_for_status()
-    # except Exception as an_error:
-    #     message = 'Your API returned an error: ' + str(an_error)
-    #     self.update_state(state='FAILURE', meta={'message': message})
+    post = requests.post(url=url + '/coordinates', json=payload)
+    post.raise_for_status()
