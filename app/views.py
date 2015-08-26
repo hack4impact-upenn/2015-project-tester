@@ -21,6 +21,7 @@ def start_request():
 def task_status(task_id):
     task = make_requests_to_api.AsyncResult(task_id)
     response = {
+        'exception': str(task.result),
         'state': task.state,
     }
     return jsonify(response)

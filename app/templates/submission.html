@@ -47,7 +47,7 @@
                     $('*').css({ 'cursor': 'default' });
                 }
                 else if (data['state'] == 'FAILURE') {
-                    $('#flashed-messaged').append('<div class="alert alert-dismissable alert-danger">\n<button type="button" class="close" data-dismiss="alert">×</button>\nYour API returned an error.\n</div>')
+                    $('#flashed-messaged').append('<div class="alert alert-dismissable alert-danger">\n<button type="button" class="close" data-dismiss="alert">×</button>\nYour API returned an error: ' + data['exception'] + ' \n</div>')
                     $('*').css({ 'cursor': 'default' });
                 }
                 else {
