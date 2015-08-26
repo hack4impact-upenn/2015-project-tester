@@ -3,8 +3,8 @@ import requests
 from app import celery
 
 
-@celery.task(bind=True)
-def make_requests_to_api(self, url):
+@celery.task()
+def make_requests_to_api(url):
     # Make sure the api is alive
     get = requests.get(url=url + '/health')
     get.raise_for_status()
