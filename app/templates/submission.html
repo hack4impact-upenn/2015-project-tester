@@ -29,7 +29,7 @@
 </div>
 <div class="container jumbotron">
     <!--<div class="row">-->
-    <h1 class="text-center">Submit your API</h1>
+    <h1 class="text-center">Submit Your API</h1>
     <!--</div>-->
     <!--<div class="row">-->
     {{ wtf.quick_form(form, button_map={'submit_field': 'primary'}) }}
@@ -40,14 +40,15 @@
 <script src="{{ url_for('static', filename='js/material.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/ripples.min.js') }}"></script>
 <script>
+    setTimeout(function() {$('#flashed-messaged').append('<div class="alert alert-dismissable alert-info">\n<button type="button" class="close" data-dismiss="alert">×</button>\nMessages will show up here. Built by Ben Sandler. \n</div>');}, 2000);
     function getStatus(url) {
         $.getJSON(url, function(data) {
                 if (data['state'] == 'SUCCESS') {
-                    $('#flashed-messaged').append('<div class="alert alert-dismissable alert-info">\n<button type="button" class="close" data-dismiss="alert">×</button>\nSuccessfully posted payload. Happy hunting.\n</div>')
+                    $('#flashed-messaged').append('<div class="alert alert-dismissable alert-info">\n<button type="button" class="close" data-dismiss="alert">×</button>\nSuccessfully posted payload. Happy hunting.\n</div>');
                     $('*').css({ 'cursor': 'default' });
                 }
                 else if (data['state'] == 'FAILURE') {
-                    $('#flashed-messaged').append('<div class="alert alert-dismissable alert-danger">\n<button type="button" class="close" data-dismiss="alert">×</button>\nYour API returned an error: ' + data['exception'] + ' \n</div>')
+                    $('#flashed-messaged').append('<div class="alert alert-dismissable alert-danger">\n<button type="button" class="close" data-dismiss="alert">×</button>\nYour API returned an error: ' + data['exception'] + ' \n</div>');
                     $('*').css({ 'cursor': 'default' });
                 }
                 else {

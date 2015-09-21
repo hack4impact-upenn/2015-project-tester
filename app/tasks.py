@@ -13,3 +13,4 @@ def make_requests_to_api(url):
     payload = secret_payload
     post = requests.post(url=url + '/coordinates', json=payload)
     post.raise_for_status()
+    print 'Made request to {}. Awesome!'.format(url)
